@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlgorithmsDataStructures0
+namespace AlgorithmsDataStructures
 {
 
     public class Node
@@ -83,6 +83,7 @@ namespace AlgorithmsDataStructures0
                     }
                     return true;
                 }
+
                 previous = node;
                 node = node.next;
             }
@@ -169,5 +170,26 @@ namespace AlgorithmsDataStructures0
             }
         }
 
+    }
+
+    static class Extensions
+    {
+        public static LinkedList GetCombinedList(LinkedList list1, LinkedList list2)
+        {
+            if (list1 == null || list2 == null || list1.Count() != list2.Count())
+                return null;
+
+            LinkedList result = new LinkedList();
+            Node node1 = list1.head;
+            Node node2 = list2.head;
+
+            while (node1 != null)
+            {
+                result.AddInTail(new Node(node1.value + node2.value));
+                node1 = node1.next;
+                node2 = node2.next;
+            }
+            return result;
+        }
     }
 }

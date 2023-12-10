@@ -7,7 +7,7 @@
     <ProjectGuid>{49F019C5-E1D9-4B6A-8513-D30F10521644}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>ASD_1</RootNamespace>
-    <AssemblyName>ASD_1</AssemblyName>
+    <AssemblyName>ASD 1</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="1_1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
