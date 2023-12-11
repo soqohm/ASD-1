@@ -1,22 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlgorithmsDataStructures1
+namespace AlgorithmsDataStructures
 {
 
     public class Node
     {
         public int value;
-        public Node next;
-        public Node(int _value) { value = _value; }
+        public Node next, prev;
+
+        public Node(int _value)
+        {
+            value = _value;
+            next = null;
+            prev = null;
+        }
     }
 
-    public class LinkedList
+    public class LinkedList2
     {
         public Node head;
         public Node tail;
 
-        public LinkedList()
+        public LinkedList2()
         {
             head = null;
             tail = null;
@@ -24,14 +30,24 @@ namespace AlgorithmsDataStructures1
 
         public void AddInTail(Node _item)
         {
-            if (head == null) head = _item;
-            else tail.next = _item;
+            if (head == null)
+            {
+                head = _item;
+                head.next = null;
+                head.prev = null;
+            }
+            else
+            {
+                tail.next = _item;
+                _item.prev = tail;
+            }
             tail = _item;
         }
 
         public Node Find(int _value)
         {
             Node node = head;
+
             while (node != null)
             {
                 if (node.value == _value) return node;
@@ -55,36 +71,35 @@ namespace AlgorithmsDataStructures1
 
         public bool Remove(int _value)
         {
-            Node previous = null;
             Node node = head;
 
             while (node != null)
             {
                 if (node.value == _value)
                 {
-                    if (previous == null && node.next == null)
+                    if (node.prev == null && node.next == null)
                     {
                         head = tail = null;
                     }
-                    else if (previous == null)
+                    else if (node.prev == null)
                     {
                         head = node.next;
-                        node.next = null;
+                        node.next = head.prev = null;
                     }
                     else if (node.next == null)
                     {
-                        tail = previous;
-                        previous.next = null;
+                        tail = node.prev;
+                        tail.next = node.prev = null;
                     }
                     else
                     {
-                        previous.next = node.next;
-                        node.next = null;
+                        node.prev.next = node.next;
+                        node.next.prev = node.prev;
+                        node.next = node.prev = null;
                     }
                     return true;
                 }
 
-                previous = node;
                 node = node.next;
             }
             return false;
@@ -92,40 +107,37 @@ namespace AlgorithmsDataStructures1
 
         public void RemoveAll(int _value)
         {
-            Node previous = null;
             Node node = head;
 
             while (node != null)
             {
                 if (node.value == _value)
                 {
-                    if (previous == null && node.next == null)
+                    if (node.prev == null && node.next == null)
                     {
                         node = head = tail = null;
                     }
-                    else if (previous == null)
+                    else if (node.prev == null)
                     {
                         head = node.next;
-                        node.next = null;
+                        node.next = head.prev = null;
                         node = head;
                     }
                     else if (node.next == null)
                     {
-                        tail = previous;
-                        node = previous.next = null;
+                        tail = node.prev;
+                        node = tail.next = null;
                     }
                     else
                     {
-                        previous.next = node.next;
-                        node.next = null;
-                        node = previous.next;
+                        node.next.prev = node.prev;
+                        node.prev = null;
+                        node = node.next;
+                        node.prev.next.next = null;
+                        node.prev.next = node;
                     }
                 }
-                else
-                {
-                    previous = node;
-                    node = node.next;
-                }
+                else node = node.next;
             }
         }
 
@@ -152,44 +164,30 @@ namespace AlgorithmsDataStructures1
             if (_nodeAfter == null && head == null)
             {
                 head = tail = _nodeToInsert;
+                head.next = head.prev = null;
             }
             else if (_nodeAfter == null)
             {
                 _nodeToInsert.next = head;
+                head.prev = _nodeToInsert;
                 head = _nodeToInsert;
+                head.prev = null;
             }
             else if (_nodeAfter.next == null)
             {
                 tail.next = _nodeToInsert;
+                _nodeToInsert.prev = tail;
                 tail = _nodeToInsert;
+                tail.next = null;
             }
             else
             {
+                _nodeAfter.next.prev = _nodeToInsert;
+                _nodeToInsert.prev = _nodeAfter;
                 _nodeToInsert.next = _nodeAfter.next;
                 _nodeAfter.next = _nodeToInsert;
             }
         }
 
-    }
-
-    static class Extensions
-    {
-        public static LinkedList GetCombinedList(LinkedList list1, LinkedList list2)
-        {
-            if (list1 == null || list2 == null || list1.Count() != list2.Count())
-                return null;
-
-            LinkedList result = new LinkedList();
-            Node node1 = list1.head;
-            Node node2 = list2.head;
-
-            while (node1 != null)
-            {
-                result.AddInTail(new Node(node1.value + node2.value));
-                node1 = node1.next;
-                node2 = node2.next;
-            }
-            return result;
-        }
     }
 }
