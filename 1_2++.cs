@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlgorithmsDataStructures3
+namespace AlgorithmsDataStructures
 {
 
     public class Node
     {
         public int value;
         public Node next, prev;
-        public bool dummy;
 
         public Node(int _value)
         {
@@ -18,16 +17,21 @@ namespace AlgorithmsDataStructures3
         }
     }
 
+    public class Dummy : Node
+    {
+        public Dummy() : base(0) { }
+    }
+
     public class LinkedList2
     {
         public Node head { get { return dummy.next; } set { dummy.next = value; } }
         public Node tail { get { return dummy.prev; } set { dummy.prev = value; } }
 
-        private Node dummy;
+        private Dummy dummy;
 
         public LinkedList2()
         {
-            dummy = new Node(0) { dummy = true };
+            dummy = new Dummy();
             dummy.next = dummy.prev = dummy;
         }
 
@@ -43,7 +47,7 @@ namespace AlgorithmsDataStructures3
         {
             Node node = head;
 
-            while (node != dummy)
+            while (!(node is Dummy))
             {
                 if (node.value == _value) return node;
                 node = node.next;
@@ -56,7 +60,7 @@ namespace AlgorithmsDataStructures3
             List<Node> nodes = new List<Node>();
             Node node = head;
 
-            while (node != dummy)
+            while (!(node is Dummy))
             {
                 if (node.value == _value) nodes.Add(node);
                 node = node.next;
@@ -68,7 +72,7 @@ namespace AlgorithmsDataStructures3
         {
             Node node = head;
 
-            while (node != dummy)
+            while (!(node is Dummy))
             {
                 if (node.value == _value)
                 {
@@ -86,7 +90,7 @@ namespace AlgorithmsDataStructures3
         {
             Node node = head;
 
-            while (node != dummy)
+            while (!(node is Dummy))
             {
                 if (node.value == _value)
                 {
@@ -110,7 +114,7 @@ namespace AlgorithmsDataStructures3
             int count = 0;
             Node node = head;
 
-            while (node != dummy)
+            while (!(node is Dummy))
             {
                 node = node.next;
                 count++;
