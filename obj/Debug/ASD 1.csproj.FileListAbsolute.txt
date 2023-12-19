@@ -1,0 +1,2 @@
+C:\Users\soqohm\source\repos\URAL macro project\ASD 1\obj\Debug\ASD 1.csproj.AssemblyReference.cache
+C:\Users\soqohm\source\repos\URAL macro project\ASD 1\obj\Debug\ASD 1.csproj.CoreCompileInputs.cache

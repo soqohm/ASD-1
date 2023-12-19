@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlgorithmsDataStructures6
+namespace AlgorithmsDataStructures7
 {
 
     public class Stack<T>

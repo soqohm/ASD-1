@@ -49,7 +49,9 @@
     <Compile Include="1_2+.cs" />
     <Compile Include="1_2.cs" />
     <Compile Include="1_3.cs" />
+    <Compile Include="1_4+.cs" />
     <Compile Include="1_4.cs" />
+    <Compile Include="1_5.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

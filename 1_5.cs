@@ -1,39 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlgorithmsDataStructures6
+namespace AlgorithmsDataStructures
 {
 
-    public class Stack<T>
+    public class Queue<T>
     {
         readonly LinkedList linkedList;
 
-        public Stack()
+        public Queue()
         {
             linkedList = new LinkedList();
+        }
+
+        public void Enqueue(T item)
+        {
+            linkedList.AddInTail(new Node(item));
+        }
+
+        public T Dequeue()
+        {
+            var obj = linkedList.Head;
+            var isDeleted = linkedList.RemoveFromHead();
+            if (isDeleted) return obj.value;
+            return default;
         }
 
         public int Size()
         {
             return linkedList.Count();
-        }
-
-        public T Pop()
-        {
-            var obj = linkedList.Head;
-            var isDeleted = linkedList.RemoveFromHead();
-            if (isDeleted) return obj.value;
-            return default(T);
-        }
-
-        public void Push(T val)
-        {
-            linkedList.AddInHead(new Node(val));
-        }
-
-        public T Peek()
-        {
-            return linkedList.Head.value;
         }
 
         class LinkedList
@@ -62,12 +57,12 @@ namespace AlgorithmsDataStructures6
                 return count;
             }
 
-            public void AddInHead(Node _node)
+            public void AddInTail(Node _item)
             {
-                _node.next = Head;
-                Head.prev = _node;
-                Head = _node;
-                Head.prev = dummy;
+                Tail.next = _item;
+                _item.prev = Tail;
+                _item.next = dummy;
+                Tail = _item;
             }
 
             public bool RemoveFromHead()
@@ -91,8 +86,8 @@ namespace AlgorithmsDataStructures6
 
         class Dummy : Node
         {
-            public Dummy() : base(default(T)) { }
+            public Dummy() : base(default) { }
         }
-    }
 
+    }
 }
