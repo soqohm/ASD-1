@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlgorithmsDataStructures7
+namespace AlgorithmsDataStructures
 {
 
     public class Stack<T>
@@ -23,7 +23,7 @@ namespace AlgorithmsDataStructures7
             var obj = linkedList.Head;
             var isDeleted = linkedList.RemoveFromHead();
             if (isDeleted) return obj.value;
-            return default(T);
+            return default;
         }
 
         public void Push(T val)
@@ -91,7 +91,44 @@ namespace AlgorithmsDataStructures7
 
         class Dummy : Node
         {
-            public Dummy() : base(default(T)) { }
+            public Dummy() : base(default) { }
+        }
+    }
+
+    public static class Extensions
+    {
+        public static bool IsBalanced(string s)
+        {
+            var stack = new Stack<char>();
+
+            for (var i = s.Length - 1; i > -1; i--)
+            {
+                if (s[i] == ')')
+                    stack.Push(s[i]);
+                if (s[i] == '(' && stack.Peek() == default(char))
+                    return false;
+                if (s[i] == '(')
+                    stack.Pop();
+            }
+            return stack.Peek() == default(char);
+        }
+
+        public static double PostfixCalc(string s)
+        {
+            var stack = new Stack<double>();
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (char.IsDigit(s[i]))
+                    stack.Push(double.Parse(s[i].ToString()));
+                if (s[i] == '+')
+                    stack.Push(stack.Pop() + stack.Pop());
+                if (s[i] == '*')
+                    stack.Push(stack.Pop() * stack.Pop());
+                if (s[i] == '=')
+                    return stack.Peek();
+            }
+            return stack.Peek();
         }
     }
 
