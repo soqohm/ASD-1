@@ -105,7 +105,7 @@ namespace AlgorithmsDataStructures
             {
                 if (s[i] == ')')
                     stack.Push(s[i]);
-                if (s[i] == '(' && stack.Peek() == default(char))
+                if (s[i] == '(' && stack.Size() == 0)
                     return false;
                 if (s[i] == '(')
                     stack.Pop();
@@ -123,8 +123,12 @@ namespace AlgorithmsDataStructures
                     stack.Push(double.Parse(s[i].ToString()));
                 if (s[i] == '+')
                     stack.Push(stack.Pop() + stack.Pop());
+                if (s[i] == '-')
+                    stack.Push(stack.Pop() - stack.Pop());
                 if (s[i] == '*')
                     stack.Push(stack.Pop() * stack.Pop());
+                if (s[i] == '/')
+                    stack.Push(stack.Pop() / stack.Pop());
                 if (s[i] == '=')
                     return stack.Peek();
             }
