@@ -1,27 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlgorithmsDataStructures8
+namespace AlgorithmsDataStructures
 {
 
-    public class Queue<T>
+    class Deque<T>
     {
         readonly LinkedList linkedList;
 
-        public Queue()
+        public Deque()
         {
             linkedList = new LinkedList();
         }
 
-        public void Enqueue(T item)
+        public void AddFront(T item)
         {
-            linkedList.AddInTail(new Node(item));
+            linkedList.AddHead(new Node(item));
         }
 
-        public T Dequeue()
+        public void AddTail(T item)
+        {
+            linkedList.AddTail(new Node(item));
+        }
+
+        public T RemoveFront()
         {
             var obj = linkedList.Head;
-            var isDeleted = linkedList.RemoveFromHead();
+            var isDeleted = linkedList.RemoveHead();
+            if (isDeleted) return obj.value;
+            return default;
+        }
+
+        public T RemoveTail()
+        {
+            var obj = linkedList.Tail;
+            var isDeleted = linkedList.RemoveTail();
             if (isDeleted) return obj.value;
             return default;
         }
@@ -57,17 +70,34 @@ namespace AlgorithmsDataStructures8
                 return count;
             }
 
-            public void AddInTail(Node _item)
+            public void AddHead(Node _node)
             {
-                Tail.next = _item;
-                _item.prev = Tail;
-                _item.next = dummy;
-                Tail = _item;
+                _node.next = Head;
+                Head.prev = _node;
+                Head = _node;
+                Head.prev = dummy;
             }
 
-            public bool RemoveFromHead()
+            public void AddTail(Node _node)
             {
-                Node node = Head;
+                Tail.next = _node;
+                _node.prev = Tail;
+                _node.next = dummy;
+                Tail = _node;
+            }
+
+            public bool RemoveHead()
+            {
+                return Remove(Head);
+            }
+
+            public bool RemoveTail()
+            {
+                return Remove(Tail);
+            }
+
+            bool Remove(Node node)
+            {
                 if (node is Dummy) return false;
 
                 node.prev.next = node.next;
@@ -88,6 +118,6 @@ namespace AlgorithmsDataStructures8
         {
             public Dummy() : base(default) { }
         }
-
     }
+
 }
