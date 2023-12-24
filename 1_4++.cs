@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlgorithmsDataStructures
+namespace AlgorithmsDataStructures8
 {
 
     public class Stack<T>
@@ -103,7 +103,7 @@ namespace AlgorithmsDataStructures
                 if (s[i] == '(')
                     stack.Pop();
             }
-            return stack.Peek() == default(char);
+            return stack.Size() > 0;
         }
 
         public static double PostfixCalc(string s)

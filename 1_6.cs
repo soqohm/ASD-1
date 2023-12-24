@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlgorithmsDataStructures
+namespace AlgorithmsDataStructures10
 {
 
     class Deque<T>

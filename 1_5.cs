@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlgorithmsDataStructures8
+namespace AlgorithmsDataStructures9
 {
 
     public class Queue<T>
