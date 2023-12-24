@@ -24,8 +24,8 @@ namespace AlgorithmsDataStructures
 
     public class OrderedList<T>
     {
-        public Node<T> Head { get { return _dummy.next; } set { _dummy.next = value; } }
-        public Node<T> Tail { get { return _dummy.prev; } set { _dummy.prev = value; } }
+        public Node<T> head { get { return _dummy.next; } set { _dummy.next = value; } }
+        public Node<T> tail { get { return _dummy.prev; } set { _dummy.prev = value; } }
 
         private Dummy<T> _dummy;
         private int _count;
@@ -58,21 +58,21 @@ namespace AlgorithmsDataStructures
 
         public void Add(T value)
         {
-            if (Compare(Head.value, value) != IsAscending() * -1)
+            if (Compare(head.value, value) != IsAscending() * -1)
             {
                 InsertAfter(null, new Node<T>(value));
                 _count++;
                 return;
             }
 
-            if (Compare(Tail.value, value) != IsAscending() * 1)
+            if (Compare(tail.value, value) != IsAscending() * 1)
             {
-                InsertAfter(Tail, new Node<T>(value));
+                InsertAfter(tail, new Node<T>(value));
                 _count++;
                 return;
             }
 
-            Node<T> node = Head.next;
+            Node<T> node = head.next;
 
             while (!(node is Dummy<T>))
             {
@@ -88,14 +88,14 @@ namespace AlgorithmsDataStructures
 
         public Node<T> Find(T val)
         {
-            var c1 = Compare(Head.value, val);
-            var c2 = Compare(Tail.value, val);
+            var c1 = Compare(head.value, val);
+            var c2 = Compare(tail.value, val);
 
             if (c1 == IsAscending() * 1 || c2 == IsAscending() * -1) return null;
-            if (c1 == 0) return Head;
-            if (c2 == 0) return Tail;
+            if (c1 == 0) return head;
+            if (c2 == 0) return tail;
 
-            Node<T> node = Head.next;
+            Node<T> node = head.next;
 
             while (!(node is Dummy<T>))
             {
@@ -108,7 +108,7 @@ namespace AlgorithmsDataStructures
 
         public void Delete(T val)
         {
-            Node<T> node = Head;
+            Node<T> node = head;
 
             while (!(node is Dummy<T>))
             {
@@ -126,7 +126,7 @@ namespace AlgorithmsDataStructures
 
         public void Clear(bool asc)
         {
-            Head = Tail = _dummy;
+            head = tail = _dummy;
             _count = 0;
             _ascending = asc;
         }
@@ -139,7 +139,7 @@ namespace AlgorithmsDataStructures
         List<Node<T>> GetAll()
         {
             List<Node<T>> r = new List<Node<T>>();
-            Node<T> node = Head;
+            Node<T> node = head;
             while (node != null)
             {
                 r.Add(node);
@@ -158,10 +158,10 @@ namespace AlgorithmsDataStructures
         {
             if (_nodeAfter == null)
             {
-                _nodeToInsert.next = Head;
-                Head.prev = _nodeToInsert;
-                Head = _nodeToInsert;
-                Head.prev = _dummy;
+                _nodeToInsert.next = head;
+                head.prev = _nodeToInsert;
+                head = _nodeToInsert;
+                head.prev = _dummy;
             }
             else
             {
