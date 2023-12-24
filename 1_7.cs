@@ -140,7 +140,7 @@ namespace AlgorithmsDataStructures
         {
             List<Node<T>> r = new List<Node<T>>();
             Node<T> node = head;
-            while (node != null)
+            while (!(node is Dummy<T>))
             {
                 r.Add(node);
                 node = node.next;
