@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlgorithmsDataStructures11
+namespace AlgorithmsDataStructures
 {
 
     public class Node<T>
@@ -17,24 +17,15 @@ namespace AlgorithmsDataStructures11
         }
     }
 
-    public class Dummy<T> : Node<T>
-    {
-        public Dummy() : base(default) { }
-    }
-
     public class OrderedList<T>
     {
-        public Node<T> head { get { return _dummy.next; } set { _dummy.next = value; } }
-        public Node<T> tail { get { return _dummy.prev; } set { _dummy.prev = value; } }
-
-        private Dummy<T> _dummy;
-        private int _count;
+        public Node<T> head, tail;
         private bool _ascending;
 
         public OrderedList(bool asc)
         {
-            _dummy = new Dummy<T>();
-            _dummy.next = _dummy.prev = _dummy;
+            head = null;
+            tail = null;
             _ascending = asc;
         }
 
@@ -58,46 +49,35 @@ namespace AlgorithmsDataStructures11
 
         public void Add(T value)
         {
-            if (Compare(head.value, value) != IsAscending() * -1)
+            if (head == null)
             {
                 InsertAfter(null, new Node<T>(value));
-                _count++;
                 return;
             }
 
-            if (Compare(tail.value, value) != IsAscending() * 1)
-            {
-                InsertAfter(tail, new Node<T>(value));
-                _count++;
-                return;
-            }
+            Node<T> node = head;
 
-            Node<T> node = head.next;
-
-            while (!(node is Dummy<T>))
+            while (node != null)
             {
                 if (Compare(node.value, value) != IsAscending() * -1)
                 {
                     InsertAfter(node.prev, new Node<T>(value));
-                    _count++;
                     return;
                 }
                 node = node.next;
             }
+
+            InsertAfter(tail, new Node<T>(value));
         }
 
         public Node<T> Find(T val)
         {
-            var c1 = Compare(head.value, val);
-            var c2 = Compare(tail.value, val);
+            if (head == null || Compare(head.value, val) == IsAscending() * 1 || Compare(tail.value, val) == IsAscending() * -1)
+                return null;
 
-            if (c1 == IsAscending() * 1 || c2 == IsAscending() * -1) return null;
-            if (c1 == 0) return head;
-            if (c2 == 0) return tail;
+            Node<T> node = head;
 
-            Node<T> node = head.next;
-
-            while (!(node is Dummy<T>))
+            while (node != null)
             {
                 if (Compare(node.value, val) == 0)
                     return node;
@@ -110,14 +90,30 @@ namespace AlgorithmsDataStructures11
         {
             Node<T> node = head;
 
-            while (!(node is Dummy<T>))
+            while (node != null)
             {
                 if (Compare(node.value, val) == 0)
                 {
-                    node.prev.next = node.next;
-                    node.next.prev = node.prev;
-                    node.next = node.prev = null;
-                    _count--;
+                    if (node.prev == null && node.next == null)
+                    {
+                        head = tail = null;
+                    }
+                    else if (node.prev == null)
+                    {
+                        head = node.next;
+                        node.next = head.prev = null;
+                    }
+                    else if (node.next == null)
+                    {
+                        tail = node.prev;
+                        tail.next = node.prev = null;
+                    }
+                    else
+                    {
+                        node.prev.next = node.next;
+                        node.next.prev = node.prev;
+                        node.next = node.prev = null;
+                    }
                     return;
                 }
                 node = node.next;
@@ -126,21 +122,28 @@ namespace AlgorithmsDataStructures11
 
         public void Clear(bool asc)
         {
-            head = tail = _dummy;
-            _count = 0;
             _ascending = asc;
+            head = tail = null;
         }
 
         public int Count()
         {
-            return _count;
+            int count = 0;
+            Node<T> node = head;
+
+            while (node != null)
+            {
+                node = node.next;
+                count++;
+            }
+            return count;
         }
 
         List<Node<T>> GetAll()
         {
             List<Node<T>> r = new List<Node<T>>();
             Node<T> node = head;
-            while (!(node is Dummy<T>))
+            while (node != null)
             {
                 r.Add(node);
                 node = node.next;
@@ -156,12 +159,24 @@ namespace AlgorithmsDataStructures11
 
         void InsertAfter(Node<T> _nodeAfter, Node<T> _nodeToInsert)
         {
-            if (_nodeAfter == null)
+            if (_nodeAfter == null && head == null)
+            {
+                head = tail = _nodeToInsert;
+                head.next = head.prev = null;
+            }
+            else if (_nodeAfter == null)
             {
                 _nodeToInsert.next = head;
                 head.prev = _nodeToInsert;
                 head = _nodeToInsert;
-                head.prev = _dummy;
+                head.prev = null;
+            }
+            else if (_nodeAfter.next == null)
+            {
+                tail.next = _nodeToInsert;
+                _nodeToInsert.prev = tail;
+                tail = _nodeToInsert;
+                tail.next = null;
             }
             else
             {

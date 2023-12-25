@@ -54,6 +54,7 @@
     <Compile Include="1_4.cs" />
     <Compile Include="1_5.cs" />
     <Compile Include="1_6.cs" />
+    <Compile Include="1_7-.cs" />
     <Compile Include="1_7.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
