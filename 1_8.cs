@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlgorithmsDataStructures
+namespace AlgorithmsDataStructures13
 {
 
     public class HashTable
