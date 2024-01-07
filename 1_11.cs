@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace AlgorithmsDataStructures
+namespace AlgorithmsDataStructures16
 {
     public class BloomFilter
     {
